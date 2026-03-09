@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Happy-Anniversary ❤️</title>
+    <title>Our 1st Anniversary ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #ff477e; --accent: #ffd1d1; --glass: rgba(255, 255, 255, 0.12); }
@@ -19,7 +19,6 @@
         h1 { font-family: 'Dancing Script', cursive; font-size: clamp(32px, 10vw, 48px); margin-bottom: 20px; background: linear-gradient(to bottom, #fff, #ffafcc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         button { margin-top: 25px; padding: 15px 35px; border: none; border-radius: 50px; background: linear-gradient(135deg, #ff477e, #ff85a1); color: white; font-weight: 800; cursor: pointer; transition: 0.4s; }
         
-        /* GALLERY RAPI (CONTAIN) */
         .gallery { --d: 10s; display: grid; place-items: center; width: 250px; margin: 30px auto; }
         .gallery > img { grid-area: 1/1; width: 100%; height: 250px; object-fit: contain; background: #f2f2f2; border: 10px solid #f2f2f2; box-shadow: 0 0 4px #0007; z-index: 2; animation: slide var(--d) infinite, z-order var(--d) infinite steps(1); }
         .gallery img:last-child { animation-name: slide, z-order-last; }
@@ -39,23 +38,19 @@
 <body>
 
     <audio id="typeSound"><source src="https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3"></audio>
+    <audio id="bgMusic" loop><source src="/foto/Bruno_Mars_-_Just_Way_You_Are_(mp3.pm).mp3"></audio>
+    <audio id="explosionSound"><source src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
     <canvas id="bgCanvas"></canvas>
 
     <div class="container">
-        <div class="page active" id="p1"><h1>Haii Kiaa Sayang ❤️</h1><p>Ada kejutan kecil buat kamu hari ini.</p><button onclick="nextPage()">Buka Kejutan</button></div>
+        <div class="page active" id="p1"><h1>Hai Sayang ❤️</h1><p>Ada kejutan kecil buat kamu hari ini.</p><button onclick="startExperience()">Buka Kejutan</button></div>
         <div class="page" id="p2"><h1>Happy Anniversary</h1><p id="letter" style="min-height: 120px; text-align: left;"></p><button onclick="nextPage()">Lanjut ❤️</button></div>
         <div class="page" id="p3"><h1>Pertanyaan Penting...</h1><p>Kamu masih mau nemenin aku terus kan?</p><div style="display: flex; gap: 15px; justify-content: center;"><button onclick="loveExplosion()">Iya Dong! ❤️</button><button id="noBtn">Enggak</button></div></div>
         <div class="page" id="p4"><h1>Memory Game 💌</h1><p>Tangkap 10 hati pelan-pelan ya...</p><div id="gameArea"></div><div style="font-weight: 800;">Score: <span id="score">0</span>/10</div></div>
         <div class="page" id="p5">
             <h1>Our Memories ❤️</h1>
             <div class="gallery">
-                <img src="foto/fotbar_1.jpeg" alt="foto">
-                <img src="foto/fotbar_2.jpeg" alt="foto">
-                <img src="foto/fotbar_3.jpeg" alt="foto">
-                <img src="foto/fotbar_4.jpeg" alt="foto">
-                <img src="foto/fotbar_5.jpeg" alt="foto">
-                <img src="foto/fotbar_6.jpeg" alt="foto">
-                <img src="foto/fotbar_7.jpeg" alt="foto">
+                <img src="foto/fotbar_1.jpeg" alt="foto"><img src="foto/fotbar_2.jpeg" alt="foto"><img src="foto/fotbar_3.jpeg" alt="foto"><img src="foto/fotbar_4.jpeg" alt="foto"><img src="foto/fotbar_5.jpeg" alt="foto"><img src="foto/fotbar_6.jpeg" alt="foto"><img src="foto/fotbar_7.jpeg" alt="foto">
             </div>
             <button onclick="nextPage()">Selanjutnya</button>
         </div>
@@ -69,9 +64,13 @@
     <script>
         let page = 1; let score = 0; let autoFirework = false; let isTyping = false;
         const canvas = document.getElementById("bgCanvas"); const ctx = canvas.getContext("2d");
+        const expSound = document.getElementById("explosionSound");
         let particles = []; let fireworks = [];
+        
         function init() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', init); init();
+        
+        function startExperience() { document.getElementById("bgMusic").play(); nextPage(); }
         
         function nextPage() {
             isTyping = false;
@@ -86,7 +85,7 @@
 
         function typeLetter() {
             isTyping = true;
-            const txt = "Happy Anniversary sayang ❤️\nNggak kerasa udah 1 tahun kita bareng. Makasih udah selalu sabar sama aku, udah selalu ada di setiap hari-hariku. Aku beruntung banget punya kamu🫂❤️."; 
+            const txt = "Happy Anniversary sayang ❤️\nNggak kerasa udah 1 tahun kita bareng. Makasih udah selalu sabar sama aku, udah selalu ada di setiap hari-hariku. Aku beruntung banget punya kamu."; 
             let i = 0; 
             const letterEl = document.getElementById("letter");
             const sound = document.getElementById("typeSound");
@@ -101,8 +100,13 @@
             typing();
         }
 
-        // KEMBANG API
-        class Firework { constructor() { this.x = Math.random() * canvas.width; this.y = canvas.height; this.targetY = Math.random() * (canvas.height * 0.5); this.speed = 4 + Math.random() * 2; this.color = `hsl(${Math.random() * 360}, 100%, 70%)`; this.history = []; } update() { this.history.push({x: this.x, y: this.y}); if(this.history.length > 10) this.history.shift(); this.y -= this.speed; if(this.y <= this.targetY) this.explode(); } explode() { for(let i=0; i<60; i++) particles.push(new Particle(this.x, this.y, this.color)); fireworks.splice(fireworks.indexOf(this), 1); } draw() { ctx.beginPath(); this.history.forEach(p => ctx.lineTo(p.x, p.y)); ctx.strokeStyle = this.color; ctx.stroke(); } }
+        class Firework { 
+            constructor() { this.x = Math.random() * canvas.width; this.y = canvas.height; this.targetY = Math.random() * (canvas.height * 0.5); this.speed = 4 + Math.random() * 2; this.color = `hsl(${Math.random() * 360}, 100%, 70%)`; this.history = []; } 
+            update() { this.history.push({x: this.x, y: this.y}); if(this.history.length > 10) this.history.shift(); this.y -= this.speed; if(this.y <= this.targetY) this.explode(); } 
+            explode() { expSound.currentTime = 0; expSound.play().catch(()=>{}); for(let i=0; i<100; i++) particles.push(new Particle(this.x, this.y, this.color)); fireworks.splice(fireworks.indexOf(this), 1); } 
+            draw() { ctx.beginPath(); this.history.forEach(p => ctx.lineTo(p.x, p.y)); ctx.strokeStyle = this.color; ctx.stroke(); } 
+        }
+
         class Particle { constructor(x, y, color) { this.x = x; this.y = y; this.color = color; this.angle = Math.random() * Math.PI * 2; this.velocity = Math.random() * 6 + 1; this.friction = 0.95; this.gravity = 0.15; this.alpha = 1; this.decay = Math.random() * 0.015 + 0.01; } update() { this.velocity *= this.friction; this.x += Math.cos(this.angle) * this.velocity; this.y += Math.sin(this.angle) * this.velocity + this.gravity; this.alpha -= this.decay; } draw() { ctx.save(); ctx.globalAlpha = this.alpha; ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, 2, 0, Math.PI*2); ctx.fill(); ctx.restore(); } }
         function triggerFinalFireworks() { if(!autoFirework) return; fireworks.push(new Firework()); setTimeout(triggerFinalFireworks, 600 + Math.random() * 500); }
         function animate() { ctx.fillStyle = 'rgba(5, 5, 5, 0.2)'; ctx.fillRect(0, 0, canvas.width, canvas.height); fireworks.forEach(f => { f.update(); f.draw(); }); particles.forEach((p, i) => { p.update(); p.draw(); if(p.alpha <= 0) particles.splice(i, 1); }); requestAnimationFrame(animate); }
@@ -114,5 +118,4 @@
         const start = new Date("2025-03-09"); const diff = Math.floor((new Date() - start) / (1000*60*60*24)); document.getElementById("daysTogether").innerText = `Sudah ${diff} Hari Bersama ❤️`;
     </script>
 </body>
-
 </html>
