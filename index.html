@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Our 1st Anniversary ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #ff477e; --accent: #ffd1d1; --glass: rgba(255, 255, 255, 0.12); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Manrope', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { height: 100vh; background: #050505; display: flex; justify-content: center; align-items: center; overflow: hidden; color: white; }
+        
+        #bgCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: radial-gradient(circle at center, #2d1b4d 0%, #050505 100%); }
+        .container { position: relative; z-index: 10; width: 100%; perspective: 2000px; }
+        .page { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 450px; padding: 40px 30px; background: var(--glass); backdrop-filter: blur(25px); border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 25px 80px rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transform: translate(-50%, -50%) scale(0.8) rotateY(90deg); transition: all 1s cubic-bezier(0.4, 0, 0.2, 1); text-align: center; }
+        .page.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1) rotateY(0deg); }
+        .page.exit { opacity: 0; transform: translate(-50%, -50%) scale(1.2) rotateY(-90deg); }
+        
+        h1 { font-family: 'Dancing Script', cursive; font-size: clamp(32px, 10vw, 48px); margin-bottom: 20px; background: linear-gradient(to bottom, #fff, #ffafcc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        button { margin-top: 25px; padding: 15px 35px; border: none; border-radius: 50px; background: linear-gradient(135deg, #ff477e, #ff85a1); color: white; font-weight: 800; cursor: pointer; transition: 0.4s; }
+        
+        /* GALLERY RAPI (CONTAIN) */
+        .gallery { --d: 10s; display: grid; place-items: center; width: 250px; margin: 30px auto; }
+        .gallery > img { grid-area: 1/1; width: 100%; height: 250px; object-fit: contain; background: #f2f2f2; border: 10px solid #f2f2f2; box-shadow: 0 0 4px #0007; z-index: 2; animation: slide var(--d) infinite, z-order var(--d) infinite steps(1); }
+        .gallery img:last-child { animation-name: slide, z-order-last; }
+        .gallery > img:nth-child(1) { animation-delay: calc(0*var(--d)); --r: 16deg; }
+        .gallery > img:nth-child(2) { animation-delay: calc(-0.2*var(--d)); --r: -1deg; }
+        .gallery > img:nth-child(3) { animation-delay: calc(-0.4*var(--d)); --r: -19deg; }
+        .gallery > img:nth-child(4) { animation-delay: calc(-0.6*var(--d)); --r: 6deg; }
+        .gallery > img:nth-child(5) { animation-delay: calc(-0.8*var(--d)); --r: -8deg; }
+        @keyframes slide { 10% { transform: translateX(120%) rotate(var(--r)); } 0%, 100%, 20% { transform: translateX(0%) rotate(var(--r)); } }
+        @keyframes z-order { 10%, 20% { z-index: 1; } 80% { z-index: 2; } }
+        @keyframes z-order-last { 10%, 20% { z-index: 1; } 90% { z-index: 2; } }
+
+        #gameArea { width: 100%; height: 250px; background: rgba(0,0,0,0.3); border-radius: 25px; margin: 20px 0; position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+        .catchHeart { position: absolute; font-size: 35px; cursor: pointer; user-select: none; }
+    </style>
+</head>
+<body>
+
+    <audio id="typeSound"><source src="https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3"></audio>
+    <canvas id="bgCanvas"></canvas>
+
+    <div class="container">
+        <div class="page active" id="p1"><h1>Hai Sayang ❤️</h1><p>Ada kejutan kecil buat kamu hari ini.</p><button onclick="nextPage()">Buka Kejutan</button></div>
+        <div class="page" id="p2"><h1>Happy Anniversary</h1><p id="letter" style="min-height: 120px; text-align: left;"></p><button onclick="nextPage()">Lanjut ❤️</button></div>
+        <div class="page" id="p3"><h1>Pertanyaan Penting...</h1><p>Kamu masih mau nemenin aku terus kan?</p><div style="display: flex; gap: 15px; justify-content: center;"><button onclick="loveExplosion()">Iya Dong! ❤️</button><button id="noBtn">Enggak</button></div></div>
+        <div class="page" id="p4"><h1>Memory Game 💌</h1><p>Tangkap 10 hati pelan-pelan ya...</p><div id="gameArea"></div><div style="font-weight: 800;">Score: <span id="score">0</span>/10</div></div>
+        <div class="page" id="p5">
+            <h1>Our Memories ❤️</h1>
+            <div class="gallery">
+                <img src="foto/fotbar_1.jpeg" alt="foto">
+                <img src="foto/fotbar_2.jpeg" alt="foto">
+                <img src="foto/fotbar_3.jpeg" alt="foto">
+                <img src="foto/fotbar_4.jpeg" alt="foto">
+                <img src="foto/fotbar_5.jpeg" alt="foto">
+                <img src="foto/fotbar_6.jpeg" alt="foto">
+                <img src="foto/fotbar_7.jpeg" alt="foto">
+            </div>
+            <button onclick="nextPage()">Selanjutnya</button>
+        </div>
+        <div class="page" id="p6">
+            <h1>1 Tahun ❤️</h1>
+            <p id="daysTogether" style="font-weight: 800; color: #ff85a1;"></p>
+            <p style="margin-top:20px; opacity: 0.6;">I Love You Forever.</p>
+        </div>
+    </div>
+
+    <script>
+        let page = 1; let score = 0; let autoFirework = false; let isTyping = false;
+        const canvas = document.getElementById("bgCanvas"); const ctx = canvas.getContext("2d");
+        let particles = []; let fireworks = [];
+        function init() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', init); init();
+        
+        function nextPage() {
+            isTyping = false;
+            const curr = document.getElementById("p" + page);
+            curr.classList.add("exit");
+            setTimeout(() => {
+                curr.classList.remove("active"); page++;
+                const next = document.getElementById("p" + page);
+                if(next) { next.classList.add("active"); if(page === 2) typeLetter(); if(page === 4) startBalancedGame(); if(page === 6) { autoFirework = true; triggerFinalFireworks(); } }
+            }, 600);
+        }
+
+        function typeLetter() {
+            isTyping = true;
+            const txt = "Happy Anniversary sayang ❤️\nNggak kerasa udah 1 tahun kita bareng. Makasih udah selalu sabar sama aku, udah selalu ada di setiap hari-hariku. Aku beruntung banget punya kamu."; 
+            let i = 0; 
+            const letterEl = document.getElementById("letter");
+            const sound = document.getElementById("typeSound");
+            letterEl.innerHTML = "";
+            function typing() {
+                if(i < txt.length && isTyping) {
+                    letterEl.innerHTML += txt.charAt(i);
+                    sound.currentTime = 0; sound.play().catch(()=>{});
+                    i++; setTimeout(typing, 60);
+                }
+            }
+            typing();
+        }
+
+        // KEMBANG API
+        class Firework { constructor() { this.x = Math.random() * canvas.width; this.y = canvas.height; this.targetY = Math.random() * (canvas.height * 0.5); this.speed = 4 + Math.random() * 2; this.color = `hsl(${Math.random() * 360}, 100%, 70%)`; this.history = []; } update() { this.history.push({x: this.x, y: this.y}); if(this.history.length > 10) this.history.shift(); this.y -= this.speed; if(this.y <= this.targetY) this.explode(); } explode() { for(let i=0; i<60; i++) particles.push(new Particle(this.x, this.y, this.color)); fireworks.splice(fireworks.indexOf(this), 1); } draw() { ctx.beginPath(); this.history.forEach(p => ctx.lineTo(p.x, p.y)); ctx.strokeStyle = this.color; ctx.stroke(); } }
+        class Particle { constructor(x, y, color) { this.x = x; this.y = y; this.color = color; this.angle = Math.random() * Math.PI * 2; this.velocity = Math.random() * 6 + 1; this.friction = 0.95; this.gravity = 0.15; this.alpha = 1; this.decay = Math.random() * 0.015 + 0.01; } update() { this.velocity *= this.friction; this.x += Math.cos(this.angle) * this.velocity; this.y += Math.sin(this.angle) * this.velocity + this.gravity; this.alpha -= this.decay; } draw() { ctx.save(); ctx.globalAlpha = this.alpha; ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, 2, 0, Math.PI*2); ctx.fill(); ctx.restore(); } }
+        function triggerFinalFireworks() { if(!autoFirework) return; fireworks.push(new Firework()); setTimeout(triggerFinalFireworks, 600 + Math.random() * 500); }
+        function animate() { ctx.fillStyle = 'rgba(5, 5, 5, 0.2)'; ctx.fillRect(0, 0, canvas.width, canvas.height); fireworks.forEach(f => { f.update(); f.draw(); }); particles.forEach((p, i) => { p.update(); p.draw(); if(p.alpha <= 0) particles.splice(i, 1); }); requestAnimationFrame(animate); }
+        animate();
+
+        function startBalancedGame() { const area = document.getElementById("gameArea"); const spawner = setInterval(() => { if(score >= 10 || page !== 4) { clearInterval(spawner); return; } const h = document.createElement("div"); h.className = "catchHeart"; h.innerHTML = "❤️"; h.style.left = Math.random() * (area.offsetWidth - 40) + "px"; h.style.top = "-50px"; area.appendChild(h); let pos = -50; const fall = setInterval(() => { pos += 2.5; h.style.top = pos + "px"; if(pos > 250) { clearInterval(fall); h.remove(); } }, 16); h.onclick = () => { score++; document.getElementById("score").innerText = score; clearInterval(fall); h.remove(); if(score >= 10) setTimeout(nextPage, 800); }; }, 900); }
+        document.getElementById("noBtn").addEventListener("mouseover", () => { document.getElementById("noBtn").style.position = "fixed"; document.getElementById("noBtn").style.left = Math.random() * 80 + "vw"; document.getElementById("noBtn").style.top = Math.random() * 80 + "vh"; });
+        function loveExplosion() { for(let i=0; i<30; i++) fireworks.push(new Firework()); setTimeout(nextPage, 1000); }
+        const start = new Date("2025-03-09"); const diff = Math.floor((new Date() - start) / (1000*60*60*24)); document.getElementById("daysTogether").innerText = `Sudah ${diff} Hari Bersama ❤️`;
+    </script>
+</body>
+</html>
