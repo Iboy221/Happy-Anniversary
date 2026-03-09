@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Our 1st Anniversary ❤️</title>
+    <title>Happy-Anniversary ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #ff477e; --accent: #ffd1d1; --glass: rgba(255, 255, 255, 0.12); }
@@ -42,7 +42,7 @@
     <canvas id="bgCanvas"></canvas>
 
     <div class="container">
-        <div class="page active" id="p1"><h1>Hai Sayang ❤️</h1><p>Ada kejutan kecil buat kamu hari ini.</p><button onclick="nextPage()">Buka Kejutan</button></div>
+        <div class="page active" id="p1"><h1>Haii Kiaa Sayang ❤️</h1><p>Ada kejutan kecil buat kamu hari ini.</p><button onclick="nextPage()">Buka Kejutan</button></div>
         <div class="page" id="p2"><h1>Happy Anniversary</h1><p id="letter" style="min-height: 120px; text-align: left;"></p><button onclick="nextPage()">Lanjut ❤️</button></div>
         <div class="page" id="p3"><h1>Pertanyaan Penting...</h1><p>Kamu masih mau nemenin aku terus kan?</p><div style="display: flex; gap: 15px; justify-content: center;"><button onclick="loveExplosion()">Iya Dong! ❤️</button><button id="noBtn">Enggak</button></div></div>
         <div class="page" id="p4"><h1>Memory Game 💌</h1><p>Tangkap 10 hati pelan-pelan ya...</p><div id="gameArea"></div><div style="font-weight: 800;">Score: <span id="score">0</span>/10</div></div>
@@ -86,7 +86,7 @@
 
         function typeLetter() {
             isTyping = true;
-            const txt = "Happy Anniversary sayang ❤️\nNggak kerasa udah 1 tahun kita bareng. Makasih udah selalu sabar sama aku, udah selalu ada di setiap hari-hariku. Aku beruntung banget punya kamu."; 
+            const txt = "Happy Anniversary sayang ❤️\nNggak kerasa udah 1 tahun kita bareng. Makasih udah selalu sabar sama aku, udah selalu ada di setiap hari-hariku. Aku beruntung banget punya kamu🫂❤️."; 
             let i = 0; 
             const letterEl = document.getElementById("letter");
             const sound = document.getElementById("typeSound");
@@ -114,4 +114,5 @@
         const start = new Date("2025-03-09"); const diff = Math.floor((new Date() - start) / (1000*60*60*24)); document.getElementById("daysTogether").innerText = `Sudah ${diff} Hari Bersama ❤️`;
     </script>
 </body>
+
 </html>
